@@ -1,6 +1,8 @@
 - [第1章-了解SQL](#第1章-了解sql)
 - [第2章-MySQL简介](#第2章-mysql简介)
 - [第3章-使用MySQL](#第3章-使用mysql)
+- [第4章:检索数据 select](#第4章检索数据-select)
+- [第5章：排序检索数据 order by](#第5章排序检索数据-order-by)
 # 第1章-了解SQL
 数据库(database)：保存有组织的数据的容器（通常是一个文件或一组文件）
 
@@ -123,13 +125,17 @@ from crashcoursel.products;
 
 # 第5章：排序检索数据 order by
 排序检索数据无顺序
+```
 select prod_name
 from products;
+```
 
 指定列排序 字母顺序
+```
 select prod_name
 from products
 order by prod_name;
+```
 
 按多个列排序 首先按prod_price,prod_price若相同，然后按prod_name排序，如果唯一，则不按prod_name排序
 select prod_id,prod_price,prod_name
