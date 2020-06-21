@@ -8,6 +8,7 @@
 - [第8章:用通配符进行过滤](#第8章用通配符进行过滤)
 - [第9章:用正则表达式进行搜索](#第9章用正则表达式进行搜索)
   - [正则表达式重复元字符](#正则表达式重复元字符)
+- [第10章:创建计算字段](#第10章创建计算字段)
 # 第1章-了解SQL
 数据库(database)：保存有组织的数据的容器（通常是一个文件或一组文件）
 
@@ -586,51 +587,71 @@ Bin(二进制) | Oct(八进制) | Dec(十进制) | Hex(十六进制) | 缩写/�
 {n,} | 不少于指定数目的匹配
 {n,m} | 匹配数目的范围(m不超过255)
 
+```
 select prod_name
 from products
 where prod_name REGEXP '\\([0-9] sticks?\\)'
-order by prod_name
+order by prod_name;
+```
 
 [0-9]匹配0-9的任意数字,sticks?匹配stick和sticks（s后的？使s可选，因为？匹配它前面的任何字符的0次或1次出现）。
+
 没有？，匹配stick和sticks会非常困难
-匹配连在一起的4位数字：
+
+配连在一起的4位数字：
+```
 select prod_name
 from products
 where prod_name REGEXP '[[:digit:]]{4}'
 order by prod_name;
+```
 
 [:digit:]匹配任意数字,{4}确切地要求他前面的字符（任意数字）出现4次，所以就是[[:digit:]]{4}
 简单的写法如下
+```
 select prod_name
 from products
 where prod_name REGEXP '[0-9][0-9][0-9][0-9]'
 order by prod_name;
+```
 
 定位符
-元字符 说明
-^ 文本的开始
-$ 文本的结尾
-[[:<:]] 词的开始
-[[:>:]] 词的结尾
+元字符 | 说明
+---|---
+^ | 文本的开始
+$ | 文本的结尾
+[[:<:]] | 词的开始
+[[:>:]] | 词的结尾
+
 找出以一个数（包括小数点开始的数）开始的所有产品，用[0-9\\.]或[[:digit:]\\.]不行，解决办法是通过^定位符处理
+```
 select prod_name
 from products
 where prod_name REGEXP '^[0-9\\.]'
 order by prod_name;
+```
 
 ^的双重用途
+```
 在集合中
     用[和]定义，用它来否定该集合，
 否则，用来指串的开始处。
+```
 
 起到类似like的作用
-LIKE和REGEXP的不同在于，LIKE匹配整个串而REGEXP匹配子串，利用定位符，通过用^开始每个表达式。用$结束每个表达式，可以使REGEXP的作用于LIKE一样
+```
+LIKE和REGEXP的不同在于，LIKE匹配整个串而REGEXP匹配子串，利用定位符，通过用^开始每个表达式。
+用$结束每个表达式，可以使REGEXP的作用于LIKE一样
+```
 
 不试用数据库表的情况下的简单测试 
+```
 select 'hello' REGEXP '[0-9]';
+```
 
 显然返回0（因为文本hello没有数字）。
-第10章:创建计算字段
+
+# 第10章:创建计算字段
 字段（field）基本与列（column）的意思相同，经常互换使用，不过数据库列一般称为列，而术语 字段通常用在计算字段的连接上。
 拼接（concatenate）将值联结到一起构成单个值
 解决办法是把两个列拼接起来，在MySQL的SELECT语句中，可使用Concat()函数来拼接两个列,而其他的DBMS使用+或||来实现拼接的，转换时需要注意
