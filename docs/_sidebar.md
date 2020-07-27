@@ -6,6 +6,8 @@
             * [MySQL必知必会阅读笔记](/note/MySQL必知必会阅读笔记.md)
             * [疯狂Java讲义阅读笔记](/note/疯狂Java讲义阅读笔记.md)
             * [spring实战阅读笔记](/note/spring实战阅读笔记.md)
+        * 未整理
+            * [redis简单使用](/note/Redis简单使用.md)
   
     * 面向对象
     
